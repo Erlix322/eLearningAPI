@@ -3,18 +3,16 @@ package main
 import (
 	"net/http"	
 	"strings"
-	"encoding/json"
+	"github.com/rs/cors"
 	"github.com/gorilla/mux" 
 	"fmt"
-	"io/ioutil"
 	"os"
 	"time"
-	"crypto/tls"
 	"eLearningAPI/tokenhandler"
+	"eLearningAPI/settingshandler"
 )
 
 func serveVideo(w http.ResponseWriter, r *http.Request){
-
 	vars := mux.Vars(r)
     key,ok := vars["key"]
 	fmt.Println("Video is",ok,key)
@@ -26,9 +24,6 @@ func serveVideo(w http.ResponseWriter, r *http.Request){
 	}else {
 		http.ServeContent(w,r, key+".mp4",time.Now(),video)
 	}
-
-	
-	
 }
 
 func HomeHandler(res http.ResponseWriter, req *http.Request){
@@ -66,16 +61,28 @@ func Middleware(h http.Handler) http.Handler {
 	})
 }
 
+//https://rubu2.rz.htw-dresden.de/API/v0/studentTimetable.php?StgJhr=17&Stg=044&StgGrp=72
+
 func main() {
     //fs := http.FileServer(http.Dir("."))
-    //http.Handle("/", http.StripPrefix("/", fs))
+	//http.Handle("/", http.StripPrefix("/", fs))
+
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
 	r.HandleFunc("/vid/", HomeHandler)
 	r.HandleFunc("/vid/{key}", serveVideo).Methods("GET")
+	r.HandleFunc("/settings", settingshandler.GetSettings )
 	//http.Handle("/",HomeHandler)
-	http.Handle("/", r)
+	//corsObj:=r.AllowedOrigins([]string{"*"})
+	
+
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowCredentials: true,
+	})
+	
 	//Secure Route
-	http.Handle("/vid/", Middleware(r))
-	http.ListenAndServe(":3000",nil)
+	http.Handle("/", c.Handler(r))
+	http.Handle("/vid/", c.Handler(Middleware(r)))
+	http.ListenAndServe(":3001",nil)
 }
