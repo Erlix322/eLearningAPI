@@ -10,8 +10,7 @@ import (
 	"os"
 	"time"
 	"crypto/tls"
-	
-
+	"eLearningAPI/tokenhandler"
 )
 
 func serveVideo(w http.ResponseWriter, r *http.Request){
@@ -93,7 +92,10 @@ func Middleware(h http.Handler) http.Handler {
             http.Error(res, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
             return
 		}
-		ret,val := checkToken(token)
+		
+		th := tokenhandler.NewTokenHandler(token)
+		
+		ret,val := th.CheckToken(token)
 		fmt.Println(val)
 		if(ret){
 			h.ServeHTTP(res,req)
