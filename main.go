@@ -31,7 +31,7 @@ func HomeHandler(res http.ResponseWriter, req *http.Request){
 }
 
 func ErrorHandler(res http.ResponseWriter, req *http.Request){
-	fmt.Fprintf(res, "Failed Authentication")
+	fmt.Fprintf(res, "Video not found")
 }
 
 
@@ -59,8 +59,9 @@ func AuthMiddleware(h http.Handler) http.Handler {
 		if(ret){
 			s.SetSession(res,req,"video")
 			h.ServeHTTP(res,req)
-		}		
-		
+		}else{
+			s.ClearSession(res,req,"video")
+		}			
 	})
 }
 
@@ -85,10 +86,7 @@ func main() {
 	//http.Handle("/",HomeHandler)
 	//corsObj:=r.AllowedOrigins([]string{"*"})
 	
-
-	r2 := mux.NewRouter()
-	r2.HandleFunc("/auth/", HomeHandler)
-	r2.HandleFunc("/auth/vid/",serveVideo)
+	
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
 		AllowCredentials: true,
