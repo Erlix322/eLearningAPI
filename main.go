@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux" 
 	"fmt"
 	"os"
-	"time"
+	"time"	
 	"eLearningAPI/tokenhandler"
 	"eLearningAPI/settingshandler"
 	"eLearningAPI/session"
@@ -29,7 +29,25 @@ func serveVideo(w http.ResponseWriter, r *http.Request){
 func HomeHandler(res http.ResponseWriter, req *http.Request){
 	fmt.Fprintf(res, "Hello home")
 }
+/*
+func verifyToken(res http.ResponseWriter, req *http.Request){
+	vars := mux.Vars(req)
+	fmt.Println(vars["token"])
 
+	token, _ := jwt.Parse(vars["token"], func(token *jwt.Token) (interface{}, error) {
+		// Don't forget to validate the alg is what you expect:
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+	
+		//hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
+		return []byte("kGxQIQIDAQAB"), nil
+	})
+
+	fmt.Println(token)
+	
+}
+*/
 func ErrorHandler(res http.ResponseWriter, req *http.Request){
 	fmt.Fprintf(res, "Video not found")
 }
@@ -83,9 +101,10 @@ func main() {
 	r.HandleFunc("/vid/", HomeHandler)
 	r.HandleFunc("/vid/{key}", serveVideo).Methods("GET")
 	r.HandleFunc("/settings", settingshandler.GetSettings )
+	//r.HandleFunc("/token/{token}",verifyToken)
 	//http.Handle("/",HomeHandler)
 	//corsObj:=r.AllowedOrigins([]string{"*"})
-	
+
 	
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
@@ -94,6 +113,7 @@ func main() {
 	
 	//Secure Route
 	http.Handle("/", c.Handler(r))
+	//http.Handle("/token/{token}", r)
 	http.Handle("/auth/",c.Handler(AuthMiddleware(r)))
 	http.Handle("/vid/", c.Handler(SessionMiddleWare(r)))
 	http.ListenAndServe(":3001",nil)
