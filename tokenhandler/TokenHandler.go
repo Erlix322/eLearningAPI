@@ -6,7 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"	
 	"time"
-	"crypto/tls")
+	"crypto/tls"
+)
 
 type TokenHandler struct {
 	token string
@@ -53,3 +54,4 @@ func (h *TokenHandler) CheckToken(token string) (bool, string){
 	
 
 }
+
