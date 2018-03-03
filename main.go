@@ -11,6 +11,7 @@ import (
 	"eLearningAPI/tokenhandler"
 	"eLearningAPI/settingshandler"
 	"eLearningAPI/session"
+	"eLearningAPI/psql"
 )
 
 func serveVideo(w http.ResponseWriter, r *http.Request){
@@ -27,7 +28,8 @@ func serveVideo(w http.ResponseWriter, r *http.Request){
 }
 
 func HomeHandler(res http.ResponseWriter, req *http.Request){
-	fmt.Fprintf(res, "Hello home")
+	conn := psql.NewConnection("user:password@/dbname")
+	vids := conn.GetVideos()
 }
 /*
 func verifyToken(res http.ResponseWriter, req *http.Request){

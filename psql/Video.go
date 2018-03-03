@@ -1,27 +1,10 @@
 package psql
 
-import (
-	"database/sql"
-	"log"
-	_ "github.com/lib/pq"
-)
-
-
-type Connection struct {
-	connsTr string	
+type Video struct{
+	Id int
+	Name string
 }
 
-func NewConnection(connectionString string) *Connection{
-	p:= &Connection{connsTr:connectionString}
-	return p
+type Videos struct{
+	videos []Video
 }
-
-func (c *Connection) connect(){
-	db, err := sql.Open("postgres",c.connsTr)
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-
-
