@@ -32,25 +32,7 @@ func HomeHandler(res http.ResponseWriter, req *http.Request){
 	vids := conn.GetVideos()
 	fmt.Println(vids)
 }
-/*
-func verifyToken(res http.ResponseWriter, req *http.Request){
-	vars := mux.Vars(req)
-	fmt.Println(vars["token"])
 
-	token, _ := jwt.Parse(vars["token"], func(token *jwt.Token) (interface{}, error) {
-		// Don't forget to validate the alg is what you expect:
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
-		}
-	
-		//hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
-		return []byte("kGxQIQIDAQAB"), nil
-	})
-
-	fmt.Println(token)
-	
-}
-*/
 func ErrorHandler(res http.ResponseWriter, req *http.Request){
 	fmt.Fprintf(res, "Video not found")
 }
@@ -96,17 +78,14 @@ func SessionMiddleWare(h http.Handler) http.Handler {
 var s = session.NewSession()
 
 func main() {
-    //fs := http.FileServer(http.Dir("."))
-	//http.Handle("/", http.StripPrefix("/", fs))
+   
 	s.CreateCookieStore("superSecret")
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
 	r.HandleFunc("/vid/", HomeHandler)
 	r.HandleFunc("/vid/{key}", serveVideo).Methods("GET")
 	r.HandleFunc("/settings", settingshandler.GetSettings )
-	//r.HandleFunc("/token/{token}",verifyToken)
-	//http.Handle("/",HomeHandler)
-	//corsObj:=r.AllowedOrigins([]string{"*"})
+	
 
 	
 	c := cors.New(cors.Options{
