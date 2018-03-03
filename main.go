@@ -30,6 +30,7 @@ func serveVideo(w http.ResponseWriter, r *http.Request){
 func HomeHandler(res http.ResponseWriter, req *http.Request){
 	conn := psql.NewConnection("user:password@/dbname")
 	vids := conn.GetVideos()
+	fmt.Println(vids)
 }
 /*
 func verifyToken(res http.ResponseWriter, req *http.Request){
