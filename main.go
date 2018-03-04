@@ -72,7 +72,7 @@ func AuthMiddleware(h http.Handler) http.Handler {
 			h.ServeHTTP(res,req)
 		}else{
 			s.ClearSession(res,req,"video")
-			h.ServeHTTP(res,req)
+			
 		}			
 	})
 }
