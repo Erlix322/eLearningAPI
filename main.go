@@ -101,4 +101,6 @@ func main() {
 	http.Handle("/auth/",c.Handler(AuthMiddleware(r)))
 	http.Handle("/vid/", c.Handler(SessionMiddleWare(r)))
 	http.ListenAndServe(":3001",nil)
+	fmt.Println("Server läuft auf 3001")
+
 }
