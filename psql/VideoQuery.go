@@ -30,7 +30,7 @@ func (c *Connection) GetVideos() []Video{
 	vs := Videos{}
 	for rows.Next() {
 		v := Video{}
-		err := rows.Scan(v.Id,v.Name)
+		err := rows.Scan(&v.Id,&v.Name)
 		if err != nil {
 			log.Fatal(err)
 		}
