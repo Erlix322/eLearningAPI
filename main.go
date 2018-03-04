@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"time"	
+	"encoding/json"
 	"eLearningAPI/tokenhandler"
 	"eLearningAPI/settingshandler"
 	"eLearningAPI/session"
@@ -30,7 +31,8 @@ func serveVideo(w http.ResponseWriter, r *http.Request){
 func HomeHandler(res http.ResponseWriter, req *http.Request){
 	conn := psql.NewConnection("user:password@/dbname")
 	vids := conn.GetVideos()
-	fmt.Println(vids)
+	m,_:=json.Marshal(vids)
+	fmt.Fprintf(res,string(m))
 }
 
 func ErrorHandler(res http.ResponseWriter, req *http.Request){
