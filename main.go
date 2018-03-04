@@ -29,7 +29,10 @@ func serveVideo(w http.ResponseWriter, r *http.Request){
 }
 
 func HomeHandler(res http.ResponseWriter, req *http.Request){
-	conn := psql.NewConnection("user:password@/dbname")
+	var user = os.Args[1]
+	var password = os.Args[2]
+	var database = os.Args[3]
+	conn := psql.NewConnection(""+user+":"+password+"@/"+database+"")
 	vids := conn.GetVideos()
 	m,_:=json.Marshal(vids)
 	fmt.Fprintf(res,string(m))
