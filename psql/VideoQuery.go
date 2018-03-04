@@ -22,7 +22,7 @@ func (c *Connection) GetVideos() []Video{
 		log.Fatal(err)
 	}
 
-	rows, err := db.Query("Select id,Name from Video;")
+	rows, err := db.Query("Select id,Name,Modul,Beschreibung from Video;")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,7 +30,7 @@ func (c *Connection) GetVideos() []Video{
 	vs := Videos{}
 	for rows.Next() {
 		v := Video{}
-		err := rows.Scan(&v.Id,&v.Name)
+		err := rows.Scan(&v.Id,&v.Name,&v.Modul,&v.Beschreibung)
 		if err != nil {
 			log.Fatal(err)
 		}
