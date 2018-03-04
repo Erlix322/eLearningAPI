@@ -16,7 +16,7 @@ func NewConnection(connectionString string) *Connection{
 	return p
 }
 
-func (c *Connection) GetVideos() Videos{
+func (c *Connection) GetVideos() []Video{
 	db, err := sql.Open("mysql",c.connsTr)
 	if err != nil {
 		log.Fatal(err)
@@ -30,7 +30,7 @@ func (c *Connection) GetVideos() Videos{
 	vs := Videos{}
 	for rows.Next() {
 		v := Video{}
-		err := rows.Scan(v.Id,v.Name)
+		err := rows.Scan(&v.Id,&v.Name)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -38,7 +38,7 @@ func (c *Connection) GetVideos() Videos{
 		vs.videos = append(vs.videos,v)		
 	}
 
-	return vs
+	return vs.videos
 }
 
 
