@@ -34,13 +34,13 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 }
 
 func saveFile(w http.ResponseWriter, file multipart.File, handle *multipart.FileHeader) {
-	var user = os.Args[1]
+	/*var user = os.Args[1]
 	var password = os.Args[2]
 	var database = os.Args[3]
 	conn := psql.NewConnection(""+user+":"+password+"@/"+database+"")
 	fmt.Println("Connected")
 	id := conn.SaveVideo(handle.Filename)
-	fmt.Println(id)
+	fmt.Println(id)*/
 	data, err := ioutil.ReadAll(file)
     if err != nil {
         fmt.Fprintf(w, "%v", err)
