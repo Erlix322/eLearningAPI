@@ -23,7 +23,8 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
     }
     defer file.Close()
 
-    mimeType := handle.Header.Get("Content-Type")
+	mimeType := handle.Header.Get("Content-Type")
+	fmt.Println(mimeType)
     switch mimeType {
     case "video/mp4":
         saveFile(w, file, handle)
@@ -37,6 +38,7 @@ func saveFile(w http.ResponseWriter, file multipart.File, handle *multipart.File
 	var password = os.Args[2]
 	var database = os.Args[3]
 	conn := psql.NewConnection(""+user+":"+password+"@/"+database+"")
+	fmt.Println("Connected")
 	id := conn.SaveVideo(handle.Filename)
 	
 	data, err := ioutil.ReadAll(file)
