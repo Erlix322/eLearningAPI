@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"eLearningAPI/tokenhandler"
 	"eLearningAPI/settingshandler"
-	//"eLearningAPI/session"
+	"eLearningAPI/uploader"
 	"eLearningAPI/psql"
 )
 
@@ -105,6 +105,7 @@ func main() {
 	r.HandleFunc("/", HomeHandler)
 	r.HandleFunc("/auth/", HomeHandler)
 	r.HandleFunc("/vid/", HomeHandler)
+	r.HandleFunc("/upload/",uploader.UploadFile)
 	r.HandleFunc("/vid/{key}", serveVideo)
 	r.HandleFunc("/settings", settingshandler.GetSettings )
 	
@@ -118,7 +119,9 @@ func main() {
 	
 	//Secure Route
 	http.Handle("/", c.Handler(r))
+
 	//http.Handle("/token/{token}", r)
+	http.Handle("/upload/",c.Handler(AuthMiddleware(r)))
 	http.Handle("/auth/",c.Handler(AuthMiddleware(r)))
 	http.Handle("/vid/",c.Handler(SessionMiddleWare(r)))
 	http.ListenAndServe(":3001",nil)

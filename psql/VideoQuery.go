@@ -16,6 +16,27 @@ func NewConnection(connectionString string) *Connection{
 	return p
 }
 
+func (c *Connection) SaveVideo(video string) int64{
+	db, err := sql.Open("mysql",c.connsTr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	result, err := db.Exec(
+		"INSERT INTO Video (Name) VALUES ($1)",
+		video,
+	)
+	if err != nil {
+		return -1
+	}
+	id,err := result.LastInsertId()
+	if err != nil {
+		return -1
+	}	
+	return id
+
+}
+
 func (c *Connection) GetVideos() []Video{
 	db, err := sql.Open("mysql",c.connsTr)
 	if err != nil {
