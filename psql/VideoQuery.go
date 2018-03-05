@@ -23,15 +23,15 @@ func (c *Connection) SaveVideo(video string) int64{
 	}
 	defer db.Close()
 	result, err := db.Exec(
-		"INSERT INTO Video (Name) VALUES ($1)",
+		"INSERT INTO Video (Name) VALUES ($1);",
 		video,
 	)
 	if err != nil {
-		return -1
+		fmt.Println(err)
 	}
 	id,err := result.LastInsertId()
 	if err != nil {
-		return -1
+		fmt.Println(err)
 	}	
 	return id
 
