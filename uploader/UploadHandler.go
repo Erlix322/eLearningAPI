@@ -40,7 +40,7 @@ func saveFile(w http.ResponseWriter, file multipart.File, handle *multipart.File
 	conn := psql.NewConnection(""+user+":"+password+"@/"+database+"")
 	fmt.Println("Connected")
 	id := conn.SaveVideo(handle.Filename)
-	
+	fmt.Println(id)
 	data, err := ioutil.ReadAll(file)
     if err != nil {
         fmt.Fprintf(w, "%v", err)

@@ -3,6 +3,7 @@ package psql
 import (
 	"database/sql"
 	"log"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 )
 
