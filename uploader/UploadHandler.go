@@ -4,9 +4,9 @@ import(
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
+	//"os"
 	"mime/multipart"
-	"eLearningAPI/psql"
+	//"eLearningAPI/psql"
 )
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
