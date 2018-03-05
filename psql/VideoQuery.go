@@ -20,7 +20,7 @@ func NewConnection(connectionString string) *Connection{
 func (c *Connection) SaveVideo(video string) int64{
 	db, err := sql.Open("mysql",c.connsTr)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 	defer db.Close()
 	result, err := db.Exec(
@@ -31,6 +31,7 @@ func (c *Connection) SaveVideo(video string) int64{
 		fmt.Println(err)
 	}
 	id,err := result.LastInsertId()
+	fmt.Println("id:",id)
 	if err != nil {
 		fmt.Println(err)
 	}	
