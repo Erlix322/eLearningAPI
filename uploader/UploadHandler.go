@@ -46,7 +46,7 @@ func saveFile(w http.ResponseWriter, file multipart.File, handle *multipart.File
         fmt.Fprintf(w, "%v", err)
         return
     }
-    err = ioutil.WriteFile("./files/"+handle.Filename, data, 0666)
+    err = ioutil.WriteFile("./files/2.mp4", data, 0666)
     if err != nil {
         fmt.Fprintf(w, "%v", err)
         return
