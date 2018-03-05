@@ -23,8 +23,9 @@ func (c *Connection) SaveVideo(video string) int64{
 		fmt.Println(err)
 	}
 	defer db.Close()
+	
 	result, err := db.Exec(
-		"INSERT INTO Video (Name) VALUES ($1);",
+		"INSERT INTO Video (Name) VALUES ($1)",
 		video,
 	)
 	if err != nil {
