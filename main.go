@@ -21,7 +21,7 @@ func serveVideo(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
     key,ok := vars["key"]
 	fmt.Println("Video is",ok,key)	
-	video, err := os.Open("./"+key+".mp4")
+	video, err := os.Open("./files/"+key+".mp4")
 	defer video.Close()
 	if err != nil {
 		ErrorHandler(w,r)
