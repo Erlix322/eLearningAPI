@@ -50,7 +50,7 @@ func (c *Connection) GetVideos() []Video{
 		log.Fatal(err)
 	}
 	vs := Videos{}
-
+	video := Video{}
 	db.Find(&vs.videos)
 	/*
 	rows, err := db.Query("Select id,Name,Modul,Beschreibung from Video;")

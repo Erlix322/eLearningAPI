@@ -10,3 +10,7 @@ type Video struct{
 type Videos struct{
 	videos []Video
 }
+
+func (Video) TableName() string{
+	return "Video"
+}
