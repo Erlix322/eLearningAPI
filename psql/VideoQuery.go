@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"fmt"
+	"github.com/jinzhu/gorm"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -44,11 +45,14 @@ func (c *Connection) SaveVideo(video string) int64{
 }
 
 func (c *Connection) GetVideos() []Video{
-	db, err := sql.Open("mysql",c.connsTr)
+	db, err := gorm.Open("mysql",c.connsTr)
 	if err != nil {
 		log.Fatal(err)
 	}
+	vs := Videos{}
 
+	db.Find(&vs.videos)
+	/*
 	rows, err := db.Query("Select id,Name,Modul,Beschreibung from Video;")
 	if err != nil {
 		log.Fatal(err)
