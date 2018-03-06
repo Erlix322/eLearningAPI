@@ -55,5 +55,18 @@ func (c *Connection) GetVideos() []Video{
 	return vs.videos
 }
 
+func (c *Connection) SavePlaylist(pl []VideoPlaylist){
+	db, err := gorm.Open("mysql",c.connsTr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	tx := db.Begin()
+	for playelem := range pl{
+		db.Create(&playelem)
+	}
+	tx.Commit()
+
+}
+
 
 
