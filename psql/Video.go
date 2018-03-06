@@ -3,7 +3,7 @@ package psql
 type Video struct{
 	Id int
 	Name string
-	Modul string
+	Owner string
 	Beschreibung string
 }
 
