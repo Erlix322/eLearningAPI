@@ -1,7 +1,7 @@
 package psql
 
 type Video struct{
-	Id int
+	Id int `gorm:"column:Id"`
 	Name string `gorm:"column:Name"`
 	Owner string `gorm:"column:Owner"`
 	Beschreibung string `gorm:"column:Beschreibung"`
