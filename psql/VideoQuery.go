@@ -52,6 +52,7 @@ func (c *Connection) GetVideos() []Video{
 	vs := Videos{}
 	
 	db.Find(&vs.videos)
+	fmt.Println(vs.videos)
 	return vs.videos
 }
 
