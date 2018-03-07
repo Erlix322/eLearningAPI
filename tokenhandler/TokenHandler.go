@@ -7,6 +7,8 @@ import (
 	"io/ioutil"	
 	"time"
 	"crypto/tls"
+	"strings"
+	"github.com/dgrijalva/jwt-go"
 )
 
 type TokenHandler struct {
@@ -55,3 +57,28 @@ func (h *TokenHandler) CheckToken(token string) (bool, string){
 
 }
 
+func GetUsername(req *http.Request) string{
+	var tokenString string
+	tokens, ok := req.Header["Authorization"]
+	if ok && len(tokens) >= 1 {
+		tokenString = tokens[0]
+		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
+	}
+
+	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		// Don't forget to validate the alg is what you expect:
+		if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+	
+		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
+		return nil,nil
+	})
+	
+	fmt.Println(token)
+	if claims, ok := token.Claims.(jwt.MapClaims); ok  {
+		return claims["preferred_username"].(string)
+	} else {
+		return ""
+	}
+}

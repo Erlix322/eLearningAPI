@@ -18,20 +18,20 @@ func NewConnection(connectionString string) *Connection{
 	return p
 }
 
-func (c *Connection) SaveVideo(video string) int64{
+func (c *Connection) SaveVideo(video string,owner string) int64{
 	db, err := sql.Open("mysql",c.connsTr)
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	stmt, err := db.Prepare("INSERT INTO Video(Name,Modul,Beschreibung) VALUES(?,?,?)")
+	stmt, err := db.Prepare("INSERT INTO Video(Name,Modul,Owner,Beschreibung) VALUES(?,?,?,?)")
 	
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer stmt.Close()
 	
-	result, err := stmt.Exec(video,"","")
+	result, err := stmt.Exec(video,"",owner,"")
 	if err != nil {
 		fmt.Println(err)
 	}
