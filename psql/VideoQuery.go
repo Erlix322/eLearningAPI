@@ -31,6 +31,7 @@ func (c *Connection) SaveVideo(video string) int64{
 	}
 	defer stmt.Close()
 	
+
 	result, err := stmt.Exec(video,"","")
 	if err != nil {
 		fmt.Println(err)

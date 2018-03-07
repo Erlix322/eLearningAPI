@@ -7,6 +7,8 @@ import (
 	"io/ioutil"	
 	"time"
 	"crypto/tls"
+	"strings"
+	"github.com/dgrijalva/jwt-go"
 )
 
 type TokenHandler struct {
@@ -53,5 +55,25 @@ func (h *TokenHandler) CheckToken(token string) (bool, string){
 	return false, "invalid token"
 	
 
+}
+
+func GetUserNameFromToken(req *http.Request) {
+	var token string
+	tokens, ok := req.Header["Authorization"]
+	if ok && len(tokens) >= 1 {
+		token = tokens[0]
+		token = strings.TrimPrefix(token, "Bearer ")
+	}
+	tokenJWT, _ := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
+		// Don't forget to validate the alg is what you expect:
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+	
+		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
+		return []byte(""), nil
+	})
+
+	fmt.Println(tokenJWT)
 }
 
