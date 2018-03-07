@@ -51,7 +51,7 @@ func (c *Connection) GetVideos() []Video{
 	}
 	vs := Videos{}
 	
-	db.Find(&vs.videos)
+	db.Raw("Select Id,Name,Owner,Beschreibung from Video;").Find(&vs.videos)
 	fmt.Println(vs.videos)
 	return vs.videos
 }
