@@ -35,7 +35,7 @@ func HomeHandler(res http.ResponseWriter, req *http.Request){
 	var password = os.Args[2]
 	var database = os.Args[3]
 	conn := psql.NewConnection(""+user+":"+password+"@/"+database+"")
-	owner := tokenhandler.GetUsername(r)
+	owner := tokenhandler.GetUsername(req)
 	vids := conn.GetVideosByUser(owner)
 	m,_:=json.Marshal(vids)
 	fmt.Fprintf(res,string(m))
