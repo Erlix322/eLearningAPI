@@ -7,9 +7,7 @@ import(
 	"os"
 	"mime/multipart"
 	"strconv"
-    "eLearningAPI/psql"
-    "eLearningAPI/tokenhandler"
- 
+	"eLearningAPI/psql"
 )
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
@@ -30,20 +28,19 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(mimeType)
     switch mimeType {
     case "video/mp4":
-        saveFile(w,r, file, handle)
+        saveFile(w, file, handle)
     default:
         jsonResponse(w, http.StatusBadRequest, "The format file is not valid.")
     }
 }
 
-func saveFile(w http.ResponseWriter, r *http.Request, file multipart.File, handle *multipart.FileHeader) {
+func saveFile(w http.ResponseWriter, file multipart.File, handle *multipart.FileHeader) {
 	var user = os.Args[1]
 	var password = os.Args[2]
 	var database = os.Args[3]
 	fmt.Println("user:",user)
 	conn := psql.NewConnection(""+user+":"+password+"@/"+database+"")
-    fmt.Println("Connected")    
-    tokenhandler.GetUserNameFromToken(r)
+	fmt.Println("Connected")
 	id := conn.SaveVideo(handle.Filename)
 	fmt.Println(id)
 	data, err := ioutil.ReadAll(file)

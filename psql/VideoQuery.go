@@ -31,7 +31,6 @@ func (c *Connection) SaveVideo(video string) int64{
 	}
 	defer stmt.Close()
 	
-
 	result, err := stmt.Exec(video,"","")
 	if err != nil {
 		fmt.Println(err)
@@ -54,6 +53,19 @@ func (c *Connection) GetVideos() []Video{
 	
 	db.Find(&vs.videos)
 	return vs.videos
+}
+
+func (c *Connection) SavePlaylist(pl []VideoPlaylist){
+	db, err := gorm.Open("mysql",c.connsTr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	tx := db.Begin()
+	for playelem := range pl{
+		db.Create(&playelem)
+	}
+	tx.Commit()
+
 }
 
 
