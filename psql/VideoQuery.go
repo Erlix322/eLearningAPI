@@ -55,6 +55,17 @@ func (c *Connection) GetVideos() []Video{
 	return vs.videos
 }
 
+func (c *Connection) GetVideosByUser(user string) []Video{
+	db, err := gorm.Open("mysql",c.connsTr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	vs := Videos{}
+	
+	db.Where("Owner = ?",user).Find(&vs.videos)
+	return vs.videos
+}
+
 func (c *Connection) SavePlaylist(pl []VideoPlaylist){
 	db, err := gorm.Open("mysql",c.connsTr)
 	if err != nil {
