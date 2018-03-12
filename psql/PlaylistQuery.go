@@ -18,9 +18,9 @@ func (c *Connection) SavePlaylist(pl pogo.VideoPlaylists){
 	/*create playlist*/
 	err = db.Create(&pl.Playlist).Error
     /*create VideoPlaylist*/
-	for playelem := range pl.VideoPlaylist{
-		fmt.Println(playelem)
-		err = db.Create(&playelem).Error
+	for videoplaylist := range pl.VideoPlaylist{
+		fmt.Println(videoplaylist)
+		err = db.Table("VideoPlaylist").Create(&videoplaylist).Error
 	}
 	if err != nil{
 		tx.Rollback()
