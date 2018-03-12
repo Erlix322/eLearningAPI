@@ -14,6 +14,7 @@ import (
 	"eLearningAPI/tokenhandler"
 	"eLearningAPI/settingshandler"
 	"eLearningAPI/uploader"
+	"eLearningAPI/playlist"
 	"eLearningAPI/psql"
 )
 
@@ -108,6 +109,7 @@ func main() {
 	r.HandleFunc("/upload/",uploader.UploadFile)
 	r.HandleFunc("/vid/{key}", serveVideo)
 	r.HandleFunc("/settings", settingshandler.GetSettings )
+	r.HandleFunc("/playlist/create",playlist.SavePlaylist)
 	
 
 	

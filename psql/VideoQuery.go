@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"fmt"
+	"os"
 	"github.com/jinzhu/gorm"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -14,6 +15,15 @@ type Connection struct {
 }
 
 func NewConnection(connectionString string) *Connection{
+	p:= &Connection{connsTr:connectionString}
+	return p
+}
+
+func NewConnectionP() *Connection{
+	var user = os.Args[1]
+	var password = os.Args[2]
+	var database = os.Args[3]
+	connectionString :=""+user+":"+password+"@/"+database+""
 	p:= &Connection{connsTr:connectionString}
 	return p
 }
@@ -67,18 +77,7 @@ func (c *Connection) GetVideosByUser(user string) []Video{
 	return vs.videos
 }
 
-func (c *Connection) SavePlaylist(pl []VideoPlaylist){
-	db, err := gorm.Open("mysql",c.connsTr)
-	if err != nil {
-		log.Fatal(err)
-	}
-	tx := db.Begin()
-	for playelem := range pl{
-		db.Create(&playelem)
-	}
-	tx.Commit()
 
-}
 
 
 
