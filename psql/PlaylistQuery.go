@@ -16,7 +16,6 @@ func (c *Connection) SavePlaylist(pl pogo.VideoPlaylists) bool{
 	}
 	tx := db.Begin()
 	/*create playlist*/
-	fmt.Printf("WTF: %+v\n", pl.VideoPlaylist[0].PKVideo)
 	if err := db.Create(&pl.Playlist).Error; err != nil {
 		tx.Rollback()
 		return false

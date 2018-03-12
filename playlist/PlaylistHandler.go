@@ -21,8 +21,6 @@ func SavePlaylist(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 	/*Save playlist*/
-	fmt.Println(t.Playlist)
-	fmt.Println(t.VideoPlaylist)
 	con.SavePlaylist(t)
 	
 }
