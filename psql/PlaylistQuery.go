@@ -18,7 +18,7 @@ func (c *Connection) SavePlaylist(pl pogo.VideoPlaylists){
 	/*create playlist*/
 	err = db.Create(&pl.Playlist).Error
     /*create VideoPlaylist*/
-	for playelem := range pl.List{
+	for playelem := range pl.VideoPlaylist{
 		fmt.Println(playelem)
 		err = db.Create(&playelem).Error
 	}

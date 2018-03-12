@@ -10,7 +10,7 @@ func (VideoPlaylist) TableName() string{
 
 type VideoPlaylists struct{
 	Playlist Playlist `json:"playlist"`
-	List []VideoPlaylist `json:"list"`
+	VideoPlaylist []VideoPlaylist `json:"list"`
 }
 
 
