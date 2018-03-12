@@ -15,12 +15,17 @@ func (c *Connection) SavePlaylist(pl pogo.VideoPlaylists){
 	}
 	tx := db.Begin()
 	/*create playlist*/
-	db.Create(&pl.Playlist)
+	err = db.Create(&pl.Playlist).Error
     /*create VideoPlaylist*/
 	for playelem := range pl.List{
-		db.Create(&playelem)
+		err = db.Create(&playelem).Error
 	}
-	tx.Commit()
+	if err != nil{
+		tx.Rollback()
+	}else{
+		tx.Commit()
+	}
+	
 
 }
 
