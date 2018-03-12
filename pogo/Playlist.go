@@ -1,7 +1,7 @@
 package pogo
 
 type Playlist struct{
-	Id int `gorm:"column:id"`
+	Id string `gorm:"column:id"`
 	Name string `gorm:"column:Name"`
 	Beschreibung string `gorm:"column:Beschreibung"`
 }
