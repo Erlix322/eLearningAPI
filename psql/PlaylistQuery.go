@@ -19,6 +19,7 @@ func (c *Connection) SavePlaylist(pl pogo.VideoPlaylists) bool{
 	}
 	uuid := u2.String()
 	fmt.Println("%s",uuid)
+	fmt.Println("%+v", pl)
 	db, err := gorm.Open("mysql",c.connsTr)
 	if err != nil {
 		log.Fatal(err)
@@ -39,8 +40,7 @@ func (c *Connection) SavePlaylist(pl pogo.VideoPlaylists) bool{
 			tx.Rollback()
 			return false
 		}
-	}
-	
+	}	
 	tx.Commit()
 	return true
 	
