@@ -18,6 +18,7 @@ func (c *Connection) SavePlaylist(pl pogo.VideoPlaylists) bool{
 		return false
 	}
 	uuid := u2.String()
+	fmt.Println("%s",uuid)
 	db, err := gorm.Open("mysql",c.connsTr)
 	if err != nil {
 		log.Fatal(err)
