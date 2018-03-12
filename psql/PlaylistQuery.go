@@ -2,6 +2,7 @@ package psql
 
 import (
 	"log"
+	"fmt"
 	"eLearningAPI/pogo"
 	"github.com/jinzhu/gorm"
 	_ "github.com/go-sql-driver/mysql"
@@ -18,6 +19,7 @@ func (c *Connection) SavePlaylist(pl pogo.VideoPlaylists){
 	err = db.Create(&pl.Playlist).Error
     /*create VideoPlaylist*/
 	for playelem := range pl.List{
+		fmt.Println(playelem)
 		err = db.Create(&playelem).Error
 	}
 	if err != nil{

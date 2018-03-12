@@ -4,14 +4,15 @@ type VideoPlaylist struct{
 	PKPlaylist int `gorm:"column:PKPlaylist"`
 }
 
+func (VideoPlaylist) TableName() string{
+	return "VideoPlaylist"
+}
+
 type VideoPlaylists struct{
 	Playlist Playlist `json:"playlist"`
 	List []VideoPlaylist `json:"list"`
 }
 
-func (VideoPlaylist) TableName() string{
-	return "VideoPlaylist"
-}
 
 /*
 JSON Format:
