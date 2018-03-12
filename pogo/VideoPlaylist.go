@@ -1,4 +1,5 @@
 package pogo
+
 type VideoPlaylist struct{
 	PKVideo int  `gorm:"column:PKVideo"`
 	PKPlaylist int `gorm:"column:PKPlaylist"`

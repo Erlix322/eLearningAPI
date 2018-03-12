@@ -16,12 +16,13 @@ func (c *Connection) SavePlaylist(pl pogo.VideoPlaylists){
 	}
 	tx := db.Begin()
 	/*create playlist*/
-	fmt.Printf("WTF: %+v\n", pl)
+	fmt.Printf("WTF: %+v\n", pl.VideoPlaylist[0].PKVideo)
 	err = db.Create(&pl.Playlist).Error
     /*create VideoPlaylist*/
-	for videoplaylist := range pl.VideoPlaylist{
-		fmt.Printf("WTF: %+v\n", videoplaylist)
-		err = db.Table("VideoPlaylist").Create(&videoplaylist).Error
+	for index,playlist := range pl.VideoPlaylist{
+		fmt.Println(playlist)
+		play := pogo.VideoPlaylist{PKVideo:pl.VideoPlaylist[index].PKVideo,PKPlaylist:pl.VideoPlaylist[index].PKPlaylist}
+		err = db.Table("VideoPlaylist").Create(&play).Error
 	}
 	if err != nil{
 		tx.Rollback()
